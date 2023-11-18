@@ -2,34 +2,34 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ObjectId } from 'mongodb';
-import { HostModelSchema } from '../schemas/guest.schema';
+import { GuestModelSchema } from '../schemas/guest.schema';
 
 @Injectable()
-export class HostRepository {
+export class GuestRepository {
   constructor(
-    @InjectModel(HostModelSchema.name)
-    private readonly hostModel: Model<HostModelSchema>,
+    @InjectModel(GuestModelSchema.name)
+    private readonly guestModel: Model<GuestModelSchema>,
   ) {}
 
-  save = (host: any): any => {
-    const newHost = new this.hostModel({
+  save = (guest: any): any => {
+    const newGuest = new this.guestModel({
       _id: new ObjectId(),
-      name: host.name,
-      lastname: host.lastname,
-      city: host.city,
-      country: host.country,
+      name: guest.name,
+      lastname: guest.lastname,
+      city: guest.city,
+      country: guest.country,
     });
 
-    newHost.save();
+    newGuest.save();
 
-    return newHost;
+    return newGuest;
   };
 
-  findById = (id: string): Promise<HostModelSchema> => {
-    return this.hostModel.findById(id).exec();
+  findById = (id: string): Promise<GuestModelSchema> => {
+    return this.guestModel.findById(id).exec();
   };
 
-  findAll = (): Promise<HostModelSchema[]> => {
-    return this.hostModel.find().exec();
+  findAll = (): Promise<GuestModelSchema[]> => {
+    return this.guestModel.find().exec();
   };
 }

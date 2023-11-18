@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IdentifiableEntitySchema } from '../../database/identifiable-entity.schema';
 
-@Schema({ collection: 'hosts' })
-export class HostModelSchema extends IdentifiableEntitySchema {
+@Schema({ collection: 'guests' })
+export class GuestModelSchema extends IdentifiableEntitySchema {
   @Prop({ required: true })
   name: string;
 
@@ -16,4 +16,4 @@ export class HostModelSchema extends IdentifiableEntitySchema {
   country: string;
 }
 
-export const HostSchema = SchemaFactory.createForClass(HostModelSchema);
+export const GuestSchema = SchemaFactory.createForClass(GuestModelSchema);

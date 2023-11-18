@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Get } from '@nestjs/common';
 import { CreateHostDto } from '../application/dtos/host.dto';
-import { HostService } from './guest.service';
+import { HostService } from './host.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('host')
@@ -14,6 +14,6 @@ export class HostController {
 
   @Post()
   create(@Body() payload: CreateHostDto) {
-    return this.hostService.createHost();
+    return this.hostService.createHost(payload);
   }
 }

@@ -10,14 +10,14 @@ export class CreateHostDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: `host lastname` })
-  readonly lastName: string;
+  readonly lastname: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: `host ciudad` })
   readonly city: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: `host pais` })
   readonly country: string;

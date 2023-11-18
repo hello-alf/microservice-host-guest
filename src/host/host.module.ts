@@ -1,10 +1,23 @@
 import { Module } from '@nestjs/common';
-import { HostController } from './api/guest.controller';
-import { HostService } from './api/guest.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { HostController } from './api/host.controller';
+import { HostService } from './api/host.service';
+import { HostRepository } from './infrastructure/mongoose/repositories';
+import {
+  HostModelSchema,
+  HostSchema,
+} from './infrastructure/mongoose/schemas/host.schema';
 
 @Module({
-  imports: [],
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: HostModelSchema.name,
+        schema: HostSchema,
+      },
+    ]),
+  ],
   controllers: [HostController],
-  providers: [HostService],
+  providers: [HostService, HostRepository],
 })
 export class HostModule {}

@@ -10,7 +10,7 @@ export class CreateHostDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ description: `host lastname` })
-  readonly lastName: string;
+  readonly lastname: string;
 
   @IsNumber()
   @IsNotEmpty()

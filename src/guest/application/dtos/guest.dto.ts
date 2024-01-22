@@ -4,28 +4,28 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateGuestDto {
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ description: `guest name` })
+  @ApiProperty({ description: `user name` })
   readonly name: string;
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ description: `guest lastname` })
+  @ApiProperty({ description: `user lastname` })
   readonly lastname: string;
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ description: `guest ciudad` })
+  @ApiProperty({ description: `user ciudad` })
   readonly city: string;
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ description: `guest pais` })
+  @ApiProperty({ description: `user pais` })
   readonly country: string;
-
+  a;
   @IsString()
   @IsNotEmpty()
   @IsEmail({}, { message: 'El formato del email no es válido' })
-  @ApiProperty({ description: `guest email` })
+  @ApiProperty({ description: `user email` })
   readonly email: string;
 
   @IsString()

@@ -21,11 +21,15 @@ import { JwtModule } from '@nestjs/jwt';
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {
-          name: 'booking-service:guest-created',
+          name: 'user-service:host-created',
+          type: 'fanout',
+        },
+        {
+          name: 'user-service:guest-created',
           type: 'fanout',
         },
       ],
-      uri: 'amqps://farhdenj:BilLhsNpcQHME1p2ItwtM5sZImZaqmDC@shrimp.rmq.cloudamqp.com/farhdenj',
+      uri: 'amqp://3.131.89.227:5672',
     }),
     JwtModule.register({
       global: true,

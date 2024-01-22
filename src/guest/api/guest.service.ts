@@ -17,11 +17,20 @@ export class GuestService {
 
   async createGuest(payload): Promise<string> {
     const response = await this.guestRepository.save(payload);
-    await this.amqpConnection.publish(
-      'booking-service:guest-created',
-      '',
-      payload,
-    );
+    let exchange = 'user-service:guest-created';
+
+    if (payload.isHost === true) {
+      exchange = 'user-service:host-created';
+    }
+
+    await this.amqpConnection.publish(exchange, '', {
+      _id: response._id.toString(),
+      name: response.name,
+      lastname: response.lastname,
+      city: response.city,
+      country: response.country,
+      email: response.email,
+    });
     return response;
   }
 

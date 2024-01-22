@@ -13,7 +13,7 @@ export class GuestController {
     return this.guestService.getGuests();
   }
 
-  @Post()
+  @Post('/register')
   create(@Body() payload: CreateGuestDto) {
     return this.guestService.createGuest(payload);
   }

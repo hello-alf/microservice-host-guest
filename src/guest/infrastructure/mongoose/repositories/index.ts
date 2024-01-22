@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ObjectId } from 'mongodb';
 import { GuestModelSchema } from '../schemas/guest.schema';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class GuestRepository {
@@ -11,13 +12,21 @@ export class GuestRepository {
     private readonly guestModel: Model<GuestModelSchema>,
   ) {}
 
-  save = (guest: any): any => {
+  save = async (guest: any): Promise<any> => {
+    const saltOrRounds = 10;
+
+    const hash = await bcrypt.hash(guest.password, saltOrRounds);
+
     const newGuest = new this.guestModel({
       _id: new ObjectId(),
       name: guest.name,
       lastname: guest.lastname,
       city: guest.city,
       country: guest.country,
+      email: guest.email,
+      password: hash,
+      isHost: false,
+      isGuest: true,
     });
 
     newGuest.save();
@@ -27,6 +36,10 @@ export class GuestRepository {
 
   findById = (id: string): Promise<GuestModelSchema> => {
     return this.guestModel.findById(id).exec();
+  };
+
+  findByEmail = (emailToFind: string): Promise<GuestModelSchema> => {
+    return this.guestModel.findOne({ email: emailToFind }).exec();
   };
 
   findAll = (): Promise<GuestModelSchema[]> => {

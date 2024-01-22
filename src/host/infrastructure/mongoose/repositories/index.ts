@@ -30,6 +30,10 @@ export class HostRepository {
     return this.hostModel.findById(id).exec();
   };
 
+  findByEmail = (emailToFind: string): Promise<HostModelSchema> => {
+    return this.hostModel.findOne({ email: emailToFind }).exec();
+  };
+
   findAll = (): Promise<HostModelSchema[]> => {
     return this.hostModel.find().exec();
   };

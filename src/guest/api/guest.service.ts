@@ -23,6 +23,8 @@ export class GuestService {
       exchange = 'user-service:host-created';
     }
 
+    console.log('exchange', exchange);
+
     await this.amqpConnection.publish(exchange, '', {
       _id: response._id.toString(),
       name: response.name,

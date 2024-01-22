@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEmail } from 'class-validator';
+import { IsString, IsNotEmpty, IsEmail, IsBoolean } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateGuestDto {
@@ -32,4 +32,12 @@ export class CreateGuestDto {
   @IsNotEmpty()
   @ApiProperty({ description: `guest password` })
   readonly password: string;
+
+  @IsBoolean()
+  @ApiProperty({ description: `host` })
+  readonly isHost: boolean;
+
+  @IsBoolean()
+  @ApiProperty({ description: `guest` })
+  readonly isGuest: boolean;
 }

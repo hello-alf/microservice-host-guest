@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { HostModule } from './host/host.module';
 import { GuestModule } from './guest/guest.module';
 import { environments } from './environments';
-import config from './host/infrastructure/config';
-import { MongooseConfigModule } from './host/infrastructure/mongoose/mongoose.module';
+import config from './guest/infrastructure/config';
+import { MongooseConfigModule } from './guest/infrastructure/mongoose/mongoose.module';
 
 @Module({
   imports: [
@@ -13,7 +12,6 @@ import { MongooseConfigModule } from './host/infrastructure/mongoose/mongoose.mo
       load: [config],
       isGlobal: true,
     }),
-    HostModule,
     GuestModule,
     MongooseConfigModule,
   ],

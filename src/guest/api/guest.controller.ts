@@ -4,8 +4,8 @@ import { GuestService } from './guest.service';
 import { ApiTags } from '@nestjs/swagger';
 import { LoginGuestDto } from '../application/dtos/login.dto';
 
-@ApiTags('guest')
-@Controller('guest')
+@ApiTags('security')
+@Controller('security')
 export class GuestController {
   constructor(private readonly guestService: GuestService) {}
   @Get('/')

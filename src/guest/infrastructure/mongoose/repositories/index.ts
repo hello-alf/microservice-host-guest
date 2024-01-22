@@ -25,8 +25,8 @@ export class GuestRepository {
       country: guest.country,
       email: guest.email,
       password: hash,
-      isHost: false,
-      isGuest: true,
+      isHost: guest.isHost,
+      isGuest: guest.isGuest,
     });
 
     newGuest.save();

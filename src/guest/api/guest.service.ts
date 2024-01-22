@@ -36,11 +36,13 @@ export class GuestService {
       throw new UnauthorizedException();
     }
 
-    if (response.isGuest === false) {
-      throw new UnauthorizedException();
-    }
+    const payloadJWT = {
+      sub: response._id,
+      username: response.email,
+      isHost: response.isHost,
+      isGuest: response.isGuest,
+    };
 
-    const payloadJWT = { sub: response._id, username: response.email };
     return {
       access_token: await this.jwtService.signAsync(payloadJWT),
     };

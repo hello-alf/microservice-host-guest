@@ -57,7 +57,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: helloalf/microservice-user:${{ env.VERSION }}
+          tags: helloalf/microservice-user:latest
           labels: ${{ steps.meta.outputs.labels }}
 
   release:

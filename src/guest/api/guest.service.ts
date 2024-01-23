@@ -11,9 +11,6 @@ export class GuestService {
     private readonly amqpConnection: AmqpConnection,
     private jwtService: JwtService,
   ) {}
-  getGuests(): string {
-    return 'Hello World!';
-  }
 
   async createGuest(payload): Promise<string> {
     const response = await this.guestRepository.save(payload);

@@ -8,10 +8,6 @@ import { LoginGuestDto } from '../application/dtos/login.dto';
 @Controller('security')
 export class GuestController {
   constructor(private readonly guestService: GuestService) {}
-  @Get('/')
-  findAll() {
-    return this.guestService.getGuests();
-  }
 
   @Post('/register')
   create(@Body() payload: CreateGuestDto) {

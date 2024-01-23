@@ -34,6 +34,9 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
+      - name: Set version
+        run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
@@ -42,9 +45,11 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
+        env:
+          VERSION: ${{ env.VERSION }}
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: helloalf/microservice-user
+          images: helloalf/microservice-user:$VERSION
 
       - name: Build and push Docker image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
@@ -54,3 +59,30 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  release:
+    name: Release
+    needs: push_to_registry
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
+          SSH_HOST: ${{ secrets.HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+            Host staging
+              HostName $SSH_HOST
+              User $SSH_USER
+              IdentityFile ~/.ssh/staging.key
+              StrictHostKeyChecking no
+          END
+
+      - name: Start the server
+        run: ssh staging 'bash deploy.sh'
